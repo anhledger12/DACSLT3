@@ -9,16 +9,22 @@ using namespace std;
 //U is a random data structure
 template <class U>
 Node<U> :: Node(const U &d) : data(d),next(NULL),prev(NULL) {}
+
 template <class U>
 Node<U>* Node<U> :: tonext() {return next;}
+
 template <class U>
 Node<U>* Node<U> :: toprev() {return prev;}
+
 template <class U>
 void Node<U> ::setnext(Node<U> *a) {next=a;}
+
 template <class U>
 void Node<U> ::setprev(Node<U> *a) {prev=a;}
+
 template <class U>
 Node<U>:: ~Node() {next=NULL;prev=NULL;}
+
 template <class U>
 U& Node<U>:: getdata() {return data;}
 

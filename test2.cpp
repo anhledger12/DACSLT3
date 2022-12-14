@@ -1,10 +1,30 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
+#include "sach.cpp"
+#include "user.cpp"
+#include "template.cpp"
 #include "Menu.cpp"
+#include "friendfunction.cpp"
 using namespace std;
 
 int main(){
+    ifstream inp_user("userbase.txt");
+    ifstream inp_sach("sachbase.txt");
+    ifstream inp_borrowing("borrowing.txt");
+
+    DSLK<Node<Sach>> sachlist;
+    DSLK<Node<User>> userlist;
+    read_file(inp_user, userlist);
+    read_file(inp_sach, sachlist);
+    read_borrowlist(inp_borrowing,userlist,sachlist);
+    cout<<"read success\n";
+
+    //writenew
+    inp_borrowing.close();
+    inp_user.close();
+    inp_sach.close();
+    system("pause");
     system("cls");
     ShowConsoleCursor(false);
     do {
@@ -35,10 +55,22 @@ int main(){
                 HOME;
                 //thuc hien lenh theo lua chon
                 switch (line) {
-                    case 0: {cout<<"Them nguoi dung\n"; break;}
-                    case 1: {cout<<"Xem/Sua thong tin nguoi dung\n";break;}
-                    case 2: {cout<<"Xoa nguoi dung\n";break;}
-                    case 3: {cout<<"Quay lai mainmenu";break;}
+                    case 0: {
+                        cout<<"Them nguoi dung\n";
+                        break;
+                    }
+                    case 1: {
+                        cout<<"Xem/Sua thong tin nguoi dung\n";
+                        break;
+                    }
+                    case 2: {
+                        cout<<"Xoa nguoi dung\n";
+                        break;
+                    }
+                    case 3: {
+                        cout<<"Quay lai mainmenu";
+                        break;
+                    }
                 }
                 //cho phan hoi sau khi thuc hien lenh
                 getch();
