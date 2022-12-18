@@ -1,7 +1,7 @@
 #ifndef USER_CPP
 #define USER_CPP
 
-#include "user.h"
+#include "../DACSLT3/Header/user.h"
 #include "input_output.cpp"
 #include <iostream>
 using namespace std;
@@ -20,20 +20,20 @@ void User:: update() {
     return;
 }
 
-DSLK<Node<Sach*>>& User:: getlist() {return list;}
+DSLK<Node<Sach*>>& User:: getList() {return list;}
 
-void User:: setid(const string& a) {uid=a;}
+void User:: setID(const string& a) {uid=a;}
 
-string User:: getid() {return uid;}
+string User:: getID() {return uid;}
 
-void User::borrowlist() {
-    int len = list.getsize();
-    Node<Sach*>* temp = list.gethead();
+void User::borrowList() {
+    int len = list.getSize();
+    Node<Sach*>* temp = list.getHead();
     Sach* ptr;
     for (int i=0;i<len;i++) {
-        ptr = temp->getdata();
+        ptr = temp->getData();
         cout<<*ptr<<'\n';
-        temp=temp->tonext();
+        temp=temp->toNext();
     }
 }
 

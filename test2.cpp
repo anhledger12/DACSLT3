@@ -1,100 +1,163 @@
 #include <iostream>
-#include <conio.h>
 #include <windows.h>
-#include "sach.cpp"
-#include "user.cpp"
-#include "template.cpp"
 #include "Menu.cpp"
-#include "friendfunction.cpp"
 using namespace std;
 
 int main(){
-    ifstream inp_user("userbase.txt");
-    ifstream inp_sach("sachbase.txt");
-    ifstream inp_borrowing("borrowing.txt");
-
-    DSLK<Node<Sach>> sachlist;
-    DSLK<Node<User>> userlist;
-    read_file(inp_user, userlist);
-    read_file(inp_sach, sachlist);
-    read_borrowlist(inp_borrowing,userlist,sachlist);
-    cout<<"read success\n";
-
-    //writenew
-    inp_borrowing.close();
-    inp_user.close();
-    inp_sach.close();
-    system("pause");
     system("cls");
     ShowConsoleCursor(false);
     do {
         int line = mainMenu.CtrlMenu();
         mainMenu.deleteMenu();
-        if (line == 0){
-            do {
-                CLEARLINE;
-                line = sachMenu.CtrlMenu();
+        if (line == 0)
+        {
+            do
+            {
+                clearScreen();
+                line = sachMenu.ctrlMenu();
                 sachMenu.deleteMenu();
                 HOME;
-                //thuc hien lenh theo lua chon
-                switch (line) {
-                    case 0: {cout<<"Them sach\n"; break;}
-                    case 1: {cout<<"Xem/Sua thong tin sach\n";break;}
-                    case 2: {cout<<"Xoa sach\n";break;}
-                    case 3: {cout<<"Quay lai mainmenu";break;}
+                // thuc hien lenh theo lua chon
+                switch (line)
+                {
+                case 0:
+                {
+                    libraryDisplay();
+                    break;
                 }
-                //cho phan hoi sau khi thuc hien lenh
-                getch();
-            } while (line!=3);
+                case 1:
+                {
+                    std::cout << "Them sach\n";
+                    if (handler->inputNew())
+                        std::cout << "Them thanh cong\n";
+                    else
+                        std::cout << "Da co sach voi thong tin tuong tu, cap nhat them so ban sao\n";
+                    handler->writeToFile();
+                    getch();
+                    break;
+                }
+                case 2:
+                {
+                    std::cout << "Xem/Sua thong tin sach\n";
+                    if (handler->updateExisted()){
+                        std::cout << "Chinh sua hoan tat\n";
+                        handler->writeToFile();
+                    }
+                    else
+                        std::cout << "Khong co cap nhat\n";
+                    getch();
+                    break;
+                }
+                case 3:
+                {
+                    std::cout << "Xoa sach\n";
+                    if (handler->removeExisted()){
+                        std::cout << "Xoa thanh cong\n";
+                        handler->writeToFile();
+                    }
+                    else
+                        std::cout << "Xoa that bai\n";
+                    getch();
+                    break;
+                }
+                case 4:
+                {
+                    break;
+                }
+                }
+                // cho phan hoi sau khi thuc hien lenh
+            } while (line != 4);
         }
         else if (line == 1)
-            do {
-                CLEARLINE;
-                line = userMenu.CtrlMenu();
+            do
+            {
+                clearScreen();
+                line = userMenu.ctrlMenu();
                 userMenu.deleteMenu();
                 HOME;
                 //thuc hien lenh theo lua chon
                 switch (line) {
-                    case 0: {
-                        cout<<"Them nguoi dung\n";
-                        break;
-                    }
-                    case 1: {
-                        cout<<"Xem/Sua thong tin nguoi dung\n";
-                        break;
-                    }
-                    case 2: {
-                        cout<<"Xoa nguoi dung\n";
-                        break;
-                    }
-                    case 3: {
-                        cout<<"Quay lai mainmenu";
-                        break;
-                    }
-                }
-                //cho phan hoi sau khi thuc hien lenh
-                getch();
-            } while (line!=3);
-        else if (line == 2)
-            do {
-                CLEARLINE;
-                line = borrowMenu.CtrlMenu();
-                borrowMenu.deleteMenu();
-                HOME;
-                //thuc hien lenh theo lua chon
-                switch (line) {
-                    case 0: {cout<<"Muon sach\n"; break;}
-                    case 1: {cout<<"Kiem tra thong tin muon sach (demo)\n";break;}
-                    case 2: {cout<<"Tra sach\n";break;}
+                    case 0: {cout<<"Them nguoi dung\n"; break;}
+                    case 1: {cout<<"Xem/Sua thong tin nguoi dung\n";break;}
+                    case 2: {cout<<"Xoa nguoi dung\n";break;}
                     case 3: {cout<<"Quay lai mainmenu";break;}
                 }
-                //cho phan hoi sau khi thuc hien lenh
-                getch();
-            } while (line!=3);
-        else break;
+                case 3:
+                {
+                    std::cout << "Xoa nguoi dung\n";
+                    if (handler->removeExisted()){
+                        std::cout << "Xoa thanh cong\n";
+                        handler->writeToFile();
+                    }
+                    else
+                        std::cout << "Xoa that bai\n";
+                    getch();
+                    break;
+                }
+                case 4:
+                {
+                    break;
+                }
+                }
+                // cho phan hoi sau khi thuc hien lenh
+            } while (line != 4);
+        else if (line == 2)
+            do
+            {
+                clearScreen();
+                line = borrowMenu.ctrlMenu();
+                borrowMenu.deleteMenu();
+                HOME;
+                // thuc hien lenh theo lua chon
+                switch (line)
+                {
+                case 0:
+                {
+                    std::cout << "Muon sach\n";
+                    if (handler->inputNew()){
+                        std::cout << "Muon thanh cong\n";
+                        handler->writeToFile();
+                    }
+                    else
+                        std::cout << "Muon that bai\n";
+                    getch();
+                    break;
+                }
+                case 1:
+                {
+                    std::cout << "Kiem tra thong tin muon tra\n";
+                    handler->updateExisted();
+                    break;
+                }
+                case 2:
+                {
+                    std::cout << "Tra sach\n";
+                    if (handler->removeExisted()){
+                        std::cout << "Tra sach hoan tat\n";
+                        handler->writeToFile();
+                    }
+                    else
+                        std::cout << "Tra sach that bai\n";
+                    getch();
+                    break;
+                }
+                case 3:
+                {
+                    break;
+                }
+                }
+                // cho phan hoi sau khi thuc hien lenh
+
+            } while (line != 3);
+        else
+            break;
     } while (true);
     HOME;
-    cout<<"Ket thuc chuong trinh";
-    getch();
+    clearScreen();
+    std::cout << "Ket thuc chuong trinh...";
+    LH.writeToFile();
+    UH.writeToFile();
+    BH.writeToFile();
+    Sleep(400);
     return 0;
 }
